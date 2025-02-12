@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 app.use('/usuarios', usuarioRoutes);
 
-const port = 9000;
+const port = 9797;
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

@@ -9,11 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.1",
+    "aws-sdk": "^2.1692.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "mysql2": "^3.11.5",
     "node.js": "^0.0.1-security"
   },
   "keywords": [],
-  "devDependencies": {},
   "description": ""
 }
