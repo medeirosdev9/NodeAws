@@ -1,10 +1,9 @@
-const AWSRepository = require('../repositories/awsRepository')
+const AWSRepository = require('../repositories/awsRepository');
 
-class AwsService {
-
+class ImagemService {
     async buscarImagem(referencia) {
         return await AWSRepository.buscarImagem(referencia);
     }
 }
 
-module.exports = new AwsService();
+module.exports = new ImagemService();

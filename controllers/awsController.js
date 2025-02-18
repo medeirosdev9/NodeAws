@@ -1,8 +1,7 @@
-import { getAllAws } from "..services/awsService.js";
-
 const AWSService = require('../services/awsService')
 
-class AwsController {
+
+class AWSController {
     async buscarImagem(req, res) {
         try {
             const { referencia } = req.body;
@@ -17,4 +16,4 @@ class AwsController {
     }
 }
 
-module.exports = new AwsController();
+module.exports = new AWSController();
