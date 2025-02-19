@@ -7,13 +7,5 @@ const pool = mysql.createPool({
   database: 'db_usuarios',
 });
 
-pool.getConnection((err, connection) => {
-  if (err) {
-    console.error('Erro ao conectar ao MySQL:', err);
-  } else {
-    console.log('Conexão ao MySQL bem-sucedida!');
-    connection.release();
-  }
-});
 
 module.exports = pool.promise();
