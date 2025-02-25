@@ -9,7 +9,6 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
-
 class AWSRepository {
     async buscarImagem(referencia) {
         try {

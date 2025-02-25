@@ -1,55 +1,46 @@
 const AWSService = require('../services/awsService');
 
 class AWSController {
-    async buscarImagem(req, res) {
+    async buscarImagem(req, res, next) {
         try {
             const { referencia } = req.body;
-            if (!referencia) {
-                return res.status(400).json({ error: "A referência da imagem é obrigatória." });
-            }
+            if (!referencia) throw new Error("A referência da imagem é obrigatória.");
+
+            // Chama o serviço para buscar a imagem
             const resultado = await AWSService.buscarImagem(referencia);
             res.json(resultado);
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            next(error);
         }
     }
 
-    async uploadImagem(req, res) {
+    async uploadImagem(req, res, next) {
         try {
-            const { file } = req;
-            if (!file) {
-                return res.status(400).json({ error: "Nenhum arquivo enviado." });
-            }
+            if (!req.file) throw new Error("Nenhum arquivo enviado.");
 
-            const resultado = await AWSService.uploadImagem(file);
+            // Chama o serviço para fazer o upload da imagem
+            const resultado = await AWSService.uploadImagem(req.file);
             res.json(resultado);
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            next(error);
         }
     }
 
-    async downloadImagem(req, res) {
+    async downloadImagem(req, res, next) {
         try {
             const { referencia } = req.body;
-            if (!referencia) {
-                return res.status(400).json({ error: "A referência da imagem é obrigatória." });
-            }
+            if (!referencia) throw new Error("A referência da imagem é obrigatória.");
 
-            // Baixa a imagem e salva na pasta Downloads
+            // Baixa a imagem e envia para o usuário
             const filePath = await AWSService.downloadImagem(referencia);
-
-            // Envia o arquivo como resposta
             res.download(filePath, (err) => {
                 if (err) {
                     console.error("Erro ao enviar o arquivo:", err);
                     res.status(500).json({ error: "Erro ao enviar o arquivo." });
                 }
-
-                // O arquivo NÃO será excluído após o envio
-                console.log(`Arquivo salvo em: ${filePath}`);
             });
         } catch (error) {
-            res.status(400).json({ error: error.message });
+            next(error);
         }
     }
 }
