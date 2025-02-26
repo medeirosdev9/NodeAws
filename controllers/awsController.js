@@ -1,6 +1,7 @@
 const AWSRepository = require('../repositories/awsRepository');
 const UsuarioRepository = require('../repositories/usuarioRepository');
 const mime = require('mime-types');
+const awsService = require('../services/awsService');
 
 class AWSController {
     async buscarImagem(req, res) {
@@ -43,21 +44,13 @@ class AWSController {
     async downloadImagem(req, res) {
         try {
             const { referencia } = req.params;
-            if (!referencia) {
-                return res.status(400).json({ error: "Referência da imagem é obrigatória." });
-            }
-    
-            const fileBuffer = await AWSRepository.downloadImagem(referencia);
-            const contentType = mime.lookup(referencia) || "application/octet-stream";
-    
-            res.setHeader("Content-Type", contentType);
-            res.setHeader("Content-Disposition", `attachment; filename="${referencia}"`);
-            res.status(200).send(fileBuffer);
+            const filePath = await awsService.downloadImagem(referencia);
+            res.status(200).json({ mensagem: 'Imagem baixda com sucesso', caminho: filePath });
         } catch (error) {
-            console.error("Erro ao fazer download da imagem:", error);
-            return res.status(500).json({ error: error.message });
+            res.status(400).json({ error: error.message });
         }
     }
+
 }
 
 module.exports = new AWSController();

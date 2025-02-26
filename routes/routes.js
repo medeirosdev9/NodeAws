@@ -18,7 +18,7 @@ router.delete('/usuarios/:id', UsuarioController.delete);
 // Rotas para imagens no AWS S3
 router.get('/aws/imagem/:referencia', awsController.buscarImagem);
 router.post('/aws/upload/:usuarioId', upload.single('file'), awsController.uploadImagem);
-router.get('/aws/download/:referencia', awsController.downloadImagem);
+router.get('/download/:referencia', awsController.downloadImagem);
 
 
 

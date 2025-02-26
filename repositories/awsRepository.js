@@ -64,11 +64,7 @@ class AWSRepository {
             };
 
             const data = await s3.getObject(params).promise();
-
-            return {
-                Body: data.Body,  
-                ContentType: data.ContentType || 'application/octet-stream'
-            };
+            return data.Body;
         } catch (error) {
             throw new Error("Erro ao baixar imagem do S3: " + error.message);
         }

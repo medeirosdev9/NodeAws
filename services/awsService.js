@@ -15,22 +15,14 @@ class ImagemService {
     }
 
     async downloadImagem(referencia) {
-        // Baixa a imagem da AWS
         const fileData = await AWSRepository.downloadImagem(referencia);
-        
-        // Define o caminho para salvar no PC
-        const downloadsPath = path.join(os.homedir(), 'Downloads');
+
+        const downloadsPath = path.join(require('os').homedir(), 'Downloads');
         const filePath = path.join(downloadsPath, referencia);
 
-        try {
-            // Salva o arquivo no disco
-            await fs.writeFile(filePath, fileData);
-            console.log(`Arquivo salvo em: ${filePath}`);
-            return filePath;
-        } catch (error) {
-            console.error(`Erro ao salvar o arquivo: ${error.message}`);
-            throw new Error("Falha ao salvar o arquivo.");
-        }
+        await fs.writeFile(filePath, fileData);
+
+        return filePath;
     }
 }
 
