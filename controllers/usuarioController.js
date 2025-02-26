@@ -74,6 +74,7 @@ class UsuarioController {
       res.status(500).send({ message: 'Erro ao excluir usuário.', error });
     }
   }
+  
 }
 
 module.exports = new UsuarioController();

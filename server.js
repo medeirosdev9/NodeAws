@@ -1,18 +1,16 @@
 const express = require('express'); 
 const cors = require('cors');
- 
+
 const router = require('./routes/routes');
 
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.json());
 
-app.listen(8081,() => {
-    console.log("Rodando");
-})
+app.use(router);
 
-app.get('/test', (req, res) => {
-    res.send("Servidor rodando! 🚀");
+app.listen(8081, () => {
+    console.log("Rodando na porta 8081");
 });
 
-app.use(router);
+
