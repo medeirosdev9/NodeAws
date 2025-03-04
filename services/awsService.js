@@ -5,12 +5,10 @@ const os = require('os');
 
 class ImagemService {
     async buscarImagem(referencia) {
-        // Busca a imagem na AWS pelo nome
         return AWSRepository.buscarImagem(referencia);
     }
 
     async uploadImagem(file) {
-        // Faz upload da imagem para a AWS
         return AWSRepository.uploadImagem(file);
     }
 
