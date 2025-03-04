@@ -13,16 +13,12 @@ AWS.config.update({
 const s3 = new AWS.S3();
 
 // Função para gerar um UUID
-function gerarUUID() {
-    return crypto.randomUUID(); 
-}
-
 class AWSRepository {
     async uploadImagem(file, usuarioId) {
         try {
-            const referencia = uuidv4(); // Gera um UUID único para a imagem
-            console.log("Referência gerada:", referencia); // Verifica se está sendo gerado corretamente
-            
+            const referencia = uuidv4() + "." + file.originalname.split('.').pop(); // Gera um UUID único com a extensão correta
+            console.log("Referência gerada:", referencia); 
+    
             const params = {
                 Bucket: 'bucketmi74',
                 Key: referencia, 
@@ -32,14 +28,14 @@ class AWSRepository {
     
             await s3.upload(params).promise();
             
-            // Certifique-se de passar os parâmetros corretamente
-            await UsuarioRepository.associarImagem(usuarioId, referencia);
+            await UsuarioRepository.associarImagem(usuarioId, referencia); // Chama apenas aqui
     
             return referencia;
         } catch (error) {
             throw new Error("Erro ao fazer upload da imagem no S3: " + error.message);
         }
     }
+    
     
 
     async buscarImagem(referencia) {
